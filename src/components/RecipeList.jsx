@@ -8,6 +8,9 @@ function RecipeList({ recipes, onDeleteRecipe, onEditRecipe }) {
         <div key={recipe.id} className="recipe-item">
           <h3>{recipe.name}</h3>
           <p>
+            <strong>Category:</strong> {recipe.category}
+          </p>
+          <p>
             <strong>Ingredients:</strong> {recipe.ingredients}
           </p>
           <p>

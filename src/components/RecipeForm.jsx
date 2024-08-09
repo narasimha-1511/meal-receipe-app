@@ -5,25 +5,29 @@ function RecipeForm({ onAddRecipe, editingRecipe, onUpdateRecipe }) {
   const [name, setName] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [instructions, setInstructions] = useState("");
+  const [category, setCategory] = useState("");
 
   useEffect(() => {
     if (editingRecipe) {
       setName(editingRecipe.name);
       setIngredients(editingRecipe.ingredients);
       setInstructions(editingRecipe.instructions);
+      setCategory(editingRecipe.category);
     }
   }, [editingRecipe]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const recipeData = { name, ingredients, instructions, category };
     if (editingRecipe) {
-      onUpdateRecipe({ ...editingRecipe, name, ingredients, instructions });
+      onUpdateRecipe({ ...editingRecipe, ...recipeData });
     } else {
-      onAddRecipe({ name, ingredients, instructions });
+      onAddRecipe(recipeData);
     }
     setName("");
     setIngredients("");
     setInstructions("");
+    setCategory("");
   };
 
   return (
@@ -35,6 +39,16 @@ function RecipeForm({ onAddRecipe, editingRecipe, onUpdateRecipe }) {
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="category">Category:</label>
+        <input
+          type="text"
+          id="category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
           required
         />
       </div>
