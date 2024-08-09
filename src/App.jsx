@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import RecipeForm from "./components/RecipeForm";
 import RecipeList from "./components/RecipeList";
 import CategoryFilter from "./components/CategoryFilter";
 import MealPlanner from "./components/MealPlanner";
 import ShoppingList from "./components/ShoppingList";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import "./App.css";
 
 function App() {
@@ -21,6 +23,21 @@ function App() {
   });
 
   const [showShoppingList, setShowShoppingList] = useState(false);
+
+  useEffect(() => {
+    const savedRecipes = localStorage.getItem("recipes");
+    const savedMealPlan = localStorage.getItem("mealPlan");
+    if (savedRecipes) setRecipes(JSON.parse(savedRecipes));
+    if (savedMealPlan) setMealPlan(JSON.parse(savedMealPlan));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("recipes", JSON.stringify(recipes));
+  }, [recipes]);
+
+  useEffect(() => {
+    localStorage.setItem("mealPlan", JSON.stringify(mealPlan));
+  }, [mealPlan]);
 
   const generateShoppingList = () => {
     const shoppingItems = {};
@@ -87,6 +104,16 @@ function App() {
       [day]: [...prevPlan[day], recipeId],
     }));
   };
+  const moveRecipe = (recipeId, fromDay, toDay) => {
+    setMealPlan((prevPlan) => {
+      const updatedPlan = { ...prevPlan };
+      updatedPlan[fromDay] = updatedPlan[fromDay].filter(
+        (id) => id !== recipeId
+      );
+      updatedPlan[toDay] = [...updatedPlan[toDay], recipeId];
+      return updatedPlan;
+    });
+  };
 
   const removeFromMealPlan = (day, recipeId) => {
     setMealPlan((prevPlan) => ({
@@ -96,53 +123,56 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Recipe Builder and Meal Planner</h1>
-      </header>
-      <main className="App-main">
-        <section className="recipe-management">
-          <h2>{editingRecipe ? "Edit Recipe" : "Add New Recipe"}</h2>
-          <RecipeForm
-            onAddRecipe={addRecipe}
-            editingRecipe={editingRecipe}
-            onUpdateRecipe={updateRecipe}
+    <DndProvider backend={HTML5Backend}>
+      <div className="App">
+        <header className="App-header">
+          <h1>Recipe Builder and Meal Planner</h1>
+        </header>
+        <main className="App-main">
+          <section className="recipe-management">
+            <h2>{editingRecipe ? "Edit Recipe" : "Add New Recipe"}</h2>
+            <RecipeForm
+              onAddRecipe={addRecipe}
+              editingRecipe={editingRecipe}
+              onUpdateRecipe={updateRecipe}
+            />
+            <h2>My Recipes</h2>
+            <CategoryFilter
+              categories={categories}
+              activeCategory={activeCategory}
+              onCategoryChange={setActiveCategory}
+            />
+            <RecipeList
+              recipes={filteredRecipes}
+              onDeleteRecipe={deleteRecipe}
+              onEditRecipe={editRecipe}
+              onAddToMealPlan={addToMealPlan}
+            />
+          </section>
+          <section className="meal-planning">
+            <h2>Meal Planner</h2>
+            <MealPlanner
+              mealPlan={mealPlan}
+              recipes={recipes}
+              onRemoveFromMealPlan={removeFromMealPlan}
+              onMoveMeal={moveRecipe}
+            />
+            <button
+              onClick={() => setShowShoppingList(true)}
+              className="generate-shopping-list"
+            >
+              Generate Shopping List
+            </button>
+          </section>
+        </main>
+        {showShoppingList && (
+          <ShoppingList
+            items={generateShoppingList()}
+            onClose={() => setShowShoppingList(false)}
           />
-          <h2>My Recipes</h2>
-          <CategoryFilter
-            categories={categories}
-            activeCategory={activeCategory}
-            onCategoryChange={setActiveCategory}
-          />
-          <RecipeList
-            recipes={filteredRecipes}
-            onDeleteRecipe={deleteRecipe}
-            onEditRecipe={editRecipe}
-            onAddToMealPlan={addToMealPlan}
-          />
-        </section>
-        <section className="meal-planning">
-          <h2>Meal Planner</h2>
-          <MealPlanner
-            mealPlan={mealPlan}
-            recipes={recipes}
-            onRemoveFromMealPlan={removeFromMealPlan}
-          />
-          <button
-            onClick={() => setShowShoppingList(true)}
-            className="generate-shopping-list"
-          >
-            Generate Shopping List
-          </button>
-        </section>
-      </main>
-      {showShoppingList && (
-        <ShoppingList
-          items={generateShoppingList()}
-          onClose={() => setShowShoppingList(false)}
-        />
-      )}
-    </div>
+        )}
+      </div>
+    </DndProvider>
   );
 }
 

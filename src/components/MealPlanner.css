@@ -44,3 +44,11 @@
     flex-basis: 100%;
   }
 }
+
+.day-plan.drag-over {
+  background-color: #e0e0e0;
+}
+
+.day-plan ul {
+  min-height: 50px;
+}
