@@ -1,7 +1,7 @@
 import React from "react";
 import "./RecipeList.css";
 
-function RecipeList({ recipes, onDeleteRecipe }) {
+function RecipeList({ recipes, onDeleteRecipe, onEditRecipe }) {
   return (
     <div className="recipe-list">
       {recipes.map((recipe) => (
@@ -13,12 +13,20 @@ function RecipeList({ recipes, onDeleteRecipe }) {
           <p>
             <strong>Instructions:</strong> {recipe.instructions}
           </p>
-          <button
-            onClick={() => onDeleteRecipe(recipe.id)}
-            className="delete-button"
-          >
-            Delete
-          </button>
+          <div className="recipe-actions">
+            <button
+              onClick={() => onEditRecipe(recipe.id)}
+              className="edit-button"
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => onDeleteRecipe(recipe.id)}
+              className="delete-button"
+            >
+              Delete
+            </button>
+          </div>
         </div>
       ))}
     </div>

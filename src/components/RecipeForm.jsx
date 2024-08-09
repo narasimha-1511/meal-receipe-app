@@ -1,14 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./RecipeForm.css";
 
-function RecipeForm({ onAddRecipe }) {
+function RecipeForm({ onAddRecipe, editingRecipe, onUpdateRecipe }) {
   const [name, setName] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [instructions, setInstructions] = useState("");
 
+  useEffect(() => {
+    if (editingRecipe) {
+      setName(editingRecipe.name);
+      setIngredients(editingRecipe.ingredients);
+      setInstructions(editingRecipe.instructions);
+    }
+  }, [editingRecipe]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddRecipe({ name, ingredients, instructions });
+    if (editingRecipe) {
+      onUpdateRecipe({ ...editingRecipe, name, ingredients, instructions });
+    } else {
+      onAddRecipe({ name, ingredients, instructions });
+    }
     setName("");
     setIngredients("");
     setInstructions("");
@@ -45,7 +57,7 @@ function RecipeForm({ onAddRecipe }) {
         />
       </div>
       <button type="submit" className="submit-button">
-        Add Recipe
+        {editingRecipe ? "Update Recipe" : "Add Recipe"}
       </button>
     </form>
   );

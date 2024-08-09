@@ -1,6 +1,7 @@
 .recipe-list {
   display: grid;
   gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 
 .recipe-item {
@@ -9,10 +10,24 @@
   border-radius: 5px;
 }
 
+.recipe-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.edit-button,
 .delete-button {
-  background-color: #f44336;
+  padding: 5px 10px;
   color: white;
   border: none;
-  padding: 5px 10px;
   cursor: pointer;
+}
+
+.edit-button {
+  background-color: #2196f3;
+}
+
+.delete-button {
+  background-color: #f44336;
 }
