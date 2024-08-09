@@ -53,11 +53,12 @@ function RecipeForm({ onAddRecipe, editingRecipe, onUpdateRecipe }) {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="ingredients">Ingredients:</label>
+        <label htmlFor="ingredients">Ingredients (comma-separated):</label>
         <textarea
           id="ingredients"
           value={ingredients}
           onChange={(e) => setIngredients(e.target.value)}
+          placeholder="Enter ingredients separated by commas"
           required
         />
       </div>

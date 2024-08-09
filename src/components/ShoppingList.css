@@ -1,0 +1,54 @@
+.shopping-list-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shopping-list-modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.shopping-list-modal h2 {
+  margin-top: 0;
+}
+
+.shopping-list-modal ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.shopping-list-modal li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.shopping-list-modal li.checked {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.shopping-list-modal input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.close-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}

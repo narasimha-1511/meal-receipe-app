@@ -3,6 +3,7 @@ import RecipeForm from "./components/RecipeForm";
 import RecipeList from "./components/RecipeList";
 import CategoryFilter from "./components/CategoryFilter";
 import MealPlanner from "./components/MealPlanner";
+import ShoppingList from "./components/ShoppingList";
 import "./App.css";
 
 function App() {
@@ -18,6 +19,27 @@ function App() {
     Saturday: [],
     Sunday: [],
   });
+
+  const [showShoppingList, setShowShoppingList] = useState(false);
+
+  const generateShoppingList = () => {
+    const shoppingItems = {};
+    Object.values(mealPlan)
+      .flat()
+      .forEach((recipeId) => {
+        const recipe = recipes.find((r) => r.id === recipeId);
+        if (recipe) {
+          recipe.ingredients.split(",").forEach((ingredient) => {
+            const trimmedIngredient = ingredient.trim();
+            shoppingItems[trimmedIngredient] =
+              (shoppingItems[trimmedIngredient] || 0) + 1;
+          });
+        }
+      });
+    return Object.entries(shoppingItems).map(
+      ([item, count]) => `${item} (x${count})`
+    );
+  };
 
   const addRecipe = (recipe) => {
     setRecipes([...recipes, { ...recipe, id: Date.now() }]);
@@ -106,8 +128,20 @@ function App() {
             recipes={recipes}
             onRemoveFromMealPlan={removeFromMealPlan}
           />
+          <button
+            onClick={() => setShowShoppingList(true)}
+            className="generate-shopping-list"
+          >
+            Generate Shopping List
+          </button>
         </section>
       </main>
+      {showShoppingList && (
+        <ShoppingList
+          items={generateShoppingList()}
+          onClose={() => setShowShoppingList(false)}
+        />
+      )}
     </div>
   );
 }
