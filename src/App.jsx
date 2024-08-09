@@ -2,12 +2,22 @@ import React, { useState } from "react";
 import RecipeForm from "./components/RecipeForm";
 import RecipeList from "./components/RecipeList";
 import CategoryFilter from "./components/CategoryFilter";
+import MealPlanner from "./components/MealPlanner";
 import "./App.css";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
   const [editingRecipe, setEditingRecipe] = useState(null);
   const [activeCategory, setActiveCategory] = useState("All");
+  const [mealPlan, setMealPlan] = useState({
+    Monday: [],
+    Tuesday: [],
+    Wednesday: [],
+    Thursday: [],
+    Friday: [],
+    Saturday: [],
+    Sunday: [],
+  });
 
   const addRecipe = (recipe) => {
     setRecipes([...recipes, { ...recipe, id: Date.now() }]);
@@ -15,6 +25,14 @@ function App() {
 
   const deleteRecipe = (id) => {
     setRecipes(recipes.filter((recipe) => recipe.id !== id));
+    // Remove the deleted recipe from the meal plan
+    const updatedMealPlan = { ...mealPlan };
+    Object.keys(updatedMealPlan).forEach((day) => {
+      updatedMealPlan[day] = updatedMealPlan[day].filter(
+        (mealId) => mealId !== id
+      );
+    });
+    setMealPlan(updatedMealPlan);
   };
 
   const editRecipe = (id) => {
@@ -41,21 +59,33 @@ function App() {
     ...new Set(recipes.map((recipe) => recipe.category)),
   ];
 
+  const addToMealPlan = (day, recipeId) => {
+    setMealPlan((prevPlan) => ({
+      ...prevPlan,
+      [day]: [...prevPlan[day], recipeId],
+    }));
+  };
+
+  const removeFromMealPlan = (day, recipeId) => {
+    setMealPlan((prevPlan) => ({
+      ...prevPlan,
+      [day]: prevPlan[day].filter((id) => id !== recipeId),
+    }));
+  };
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>Recipe Builder and Meal Planner</h1>
       </header>
       <main className="App-main">
-        <section className="recipe-form-section">
+        <section className="recipe-management">
           <h2>{editingRecipe ? "Edit Recipe" : "Add New Recipe"}</h2>
           <RecipeForm
             onAddRecipe={addRecipe}
             editingRecipe={editingRecipe}
             onUpdateRecipe={updateRecipe}
           />
-        </section>
-        <section className="recipe-list-section">
           <h2>My Recipes</h2>
           <CategoryFilter
             categories={categories}
@@ -66,6 +96,15 @@ function App() {
             recipes={filteredRecipes}
             onDeleteRecipe={deleteRecipe}
             onEditRecipe={editRecipe}
+            onAddToMealPlan={addToMealPlan}
+          />
+        </section>
+        <section className="meal-planning">
+          <h2>Meal Planner</h2>
+          <MealPlanner
+            mealPlan={mealPlan}
+            recipes={recipes}
+            onRemoveFromMealPlan={removeFromMealPlan}
           />
         </section>
       </main>

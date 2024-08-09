@@ -1,0 +1,46 @@
+.meal-planner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.day-plan {
+  flex-basis: calc(33.333% - 20px);
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.day-plan h3 {
+  margin-top: 0;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.day-plan ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.day-plan li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.remove-meal {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 2px 5px;
+  cursor: pointer;
+  font-size: 0.8em;
+}
+
+@media (max-width: 768px) {
+  .day-plan {
+    flex-basis: 100%;
+  }
+}

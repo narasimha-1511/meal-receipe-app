@@ -36,3 +36,20 @@ body {
     flex: 1;
   }
 }
+
+.App-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.recipe-management,
+.meal-planning {
+  flex: 1;
+}
+
+@media (min-width: 1024px) {
+  .App-main {
+    flex-direction: row;
+  }
+}
