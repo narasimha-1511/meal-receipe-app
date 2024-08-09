@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./RecipeForm.css";
 
 function RecipeForm({ onAddRecipe }) {
   const [name, setName] = useState("");
@@ -14,8 +15,8 @@ function RecipeForm({ onAddRecipe }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <form onSubmit={handleSubmit} className="recipe-form">
+      <div className="form-group">
         <label htmlFor="name">Recipe Name:</label>
         <input
           type="text"
@@ -25,7 +26,7 @@ function RecipeForm({ onAddRecipe }) {
           required
         />
       </div>
-      <div>
+      <div className="form-group">
         <label htmlFor="ingredients">Ingredients:</label>
         <textarea
           id="ingredients"
@@ -34,7 +35,7 @@ function RecipeForm({ onAddRecipe }) {
           required
         />
       </div>
-      <div>
+      <div className="form-group">
         <label htmlFor="instructions">Instructions:</label>
         <textarea
           id="instructions"
@@ -43,7 +44,9 @@ function RecipeForm({ onAddRecipe }) {
           required
         />
       </div>
-      <button type="submit">Add Recipe</button>
+      <button type="submit" className="submit-button">
+        Add Recipe
+      </button>
     </form>
   );
 }
