@@ -6,19 +6,21 @@
 }
 
 .category-button {
-  padding: 5px 10px;
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 8px 12px;
+  border-radius: 20px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .category-button.active {
-  background-color: #4caf50;
+  background-color: var(--primary-color);
   color: white;
 }
 
 .category-button:hover {
-  background-color: #e0e0e0;
+  background-color: var(--primary-color);
+  color: white;
 }

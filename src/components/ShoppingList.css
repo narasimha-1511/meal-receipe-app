@@ -13,15 +13,18 @@
 .shopping-list-modal {
   background-color: white;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 8px;
   max-width: 500px;
   width: 90%;
   max-height: 80vh;
   overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .shopping-list-modal h2 {
-  margin-top: 0;
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 10px;
 }
 
 .shopping-list-modal ul {
@@ -33,6 +36,13 @@
   margin-bottom: 10px;
   display: flex;
   align-items: center;
+  padding: 5px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.shopping-list-modal li:hover {
+  background-color: var(--background-color);
 }
 
 .shopping-list-modal li.checked {
@@ -46,9 +56,5 @@
 
 .close-button {
   margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  cursor: pointer;
+  width: 100%;
 }

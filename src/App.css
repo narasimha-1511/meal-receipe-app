@@ -1,63 +1,68 @@
+:root {
+  --primary-color: #4a90e2;
+  --secondary-color: #f39c12;
+  --background-color: #f0f4f8;
+  --text-color: #333;
+  --border-color: #ddd;
+}
+
 body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
+  font-family: "Roboto", sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
 }
 
 .App {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  box-sizing: border-box;
 }
 
 .App-header {
-  background-color: #282c34;
-  padding: 20px;
+  background-color: var(--primary-color);
   color: white;
+  padding: 20px;
   text-align: center;
+  border-radius: 8px;
+  margin-bottom: 20px;
 }
 
 .App-main {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  align-items: center;
 }
 
 @media (min-width: 768px) {
   .App-main {
     flex-direction: row;
-    align-items: flex-start;
   }
 
-  .recipe-form-section,
-  .recipe-list-section {
+  .recipe-management,
+  .meal-planning {
     flex: 1;
   }
 }
 
-.App-main {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
 .recipe-management,
 .meal-planning {
-  flex: 1;
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-@media (min-width: 1024px) {
-  .App-main {
-    flex-direction: row;
-  }
-}
-.generate-shopping-list {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #2196f3;
+button {
+  background-color: var(--primary-color);
   color: white;
   border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #357abd;
 }
